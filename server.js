@@ -2,10 +2,37 @@ var express = require('express');
 
 var app = express();
 
-app.get('/', function (req, res) {
-    res.send('Hello World!');
+
+
+
+var getNaturalDate = function(s) {
+    var day = s.getDate();
+    var monthNumber = s.getMonth();
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'December']
+    var monthName = months[monthNumber]
+    var year = s.getFullYear()
+
+    return `${monthName} ${day}, ${year}`;    
+}
+
+
+var dateFromString = function(s) {
+    var date = new Date(s);
+    if(date=='Invalid Date') {
+        return { unix: null, natural: null} ;
+    } else {
+        var unixDate = date.getTime();
+        var naturalDate = getNaturalDate(date);
+        return { unix: unixDate, natural: naturalDate} ;
+    }
+}
+
+app.get('/:date', function(req, res) {
+    var dateInput = req.params.date;
+    // try and parse as Int, else treat as string
+    res.json( dateFromString(dateInput) );
+    res.end();
 });
 
-app.listen(8080, function () {
-    console.log('Example app listening on port 8080!');
-});
+
+app.listen(8000)
