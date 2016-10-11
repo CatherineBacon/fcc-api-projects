@@ -35,8 +35,9 @@ app.get('/:date', function(req, res) {
     res.end();
 });
 
+var port = process.env.PORT || 1337;
 
-app.listen(8000)
+app.listen(port);
 
 module.exports = {
     getNaturalDate: getNaturalDate,
