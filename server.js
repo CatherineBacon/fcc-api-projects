@@ -1,6 +1,10 @@
+var path = require('path');
 var express = require('express');
 
 var app = express();
+
+app.set('views', path.join(__dirname, 'templates'));
+app.set('view engine', 'jade');
 
 var getNaturalDate = function(s) {
     var day = s.getDate();
@@ -28,6 +32,10 @@ var dateFromString = function(s) {
         return { unix: unixDate, natural: naturalDate} ;
     }
 }
+
+app.get('/', function(req, res) {
+    res.render('index');
+});
 
 app.get('/:date', function(req, res) {
     var dateInput = req.params.date;   
