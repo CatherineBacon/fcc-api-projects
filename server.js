@@ -8,10 +8,8 @@ var getNaturalDate = function(s) {
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     var monthName = months[monthNumber]
     var year = s.getFullYear()
-
     return `${monthName} ${day}, ${year}`;    
 }
-
 
 var dateFromString = function(s) {
     var n = parseInt(s);
@@ -21,7 +19,7 @@ var dateFromString = function(s) {
     } else {
         date = new Date(n);
     }
- 
+    
     if(date=='Invalid Date') {
         return { unix: null, natural: null} ;
     } else {
@@ -32,12 +30,15 @@ var dateFromString = function(s) {
 }
 
 app.get('/:date', function(req, res) {
-    var dateInput = req.params.date;
-    // try and parse as Int, else treat as string
-    
+    var dateInput = req.params.date;   
     res.json( dateFromString(dateInput) );
     res.end();
 });
 
 
 app.listen(8000)
+
+module.exports = {
+    getNaturalDate: getNaturalDate,
+    dateFromString: dateFromString
+};
